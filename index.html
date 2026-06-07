@@ -6,13 +6,13 @@
 
     <title>ResumeYar</title>
 
-    <!-- اتصال PWA -->
+    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
 
-    <!-- آیکن اپ -->
+    <!-- Icon -->
     <link rel="icon" href="assets/icon.png">
 
-    <!-- تم اپ -->
+    <!-- Theme -->
     <meta name="theme-color" content="#000000">
 
     <style>
@@ -39,6 +39,7 @@
             color: white;
             border-radius: 8px;
             margin-top: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -49,20 +50,21 @@
         <h1>رزومه‌ساز حرفه‌ای</h1>
         <p>ساخت و دانلود رزومه PDF</p>
 
-        <button onclick="downloadPDF()">دانلود رزومه PDF</button>
+        <button onclick="alert('در حال توسعه 🚀')">
+            ساخت رزومه
+        </button>
     </div>
 
-    <script>
-        function downloadPDF() {
-            window.open("resume.pdf", "_blank");
-        }
-    </script>
-
-    <!-- Service Worker -->
+    <!-- ✅ Service Worker Register -->
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('service-worker.js')
-            .then(() => console.log("SW Registered"));
+            .then(reg => {
+                console.log('SW registered:', reg);
+            })
+            .catch(err => {
+                console.log('SW failed:', err);
+            });
         }
     </script>
 
