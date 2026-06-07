@@ -1,13 +1,29 @@
+const CACHE_NAME = "resumeyar-v1";
+
+const urlsToCache = [
+  "./",
+  "./index.html",
+  "./manifest.json",
+  "./assets/icon.png"
+];
+
 self.addEventListener("install", event => {
-    console.log("Service Worker installed");
-    self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(urlsToCache);
+    })
+  );
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
-    console.log("Service Worker activated");
-    event.waitUntil(self.clients.claim());
+  event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener("fetch", event => {
-    event.respondWith(fetch(event.request));
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
+  );
 });
