@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResumeYar Pro</title>
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+body{
+font-family:tahoma;
+background:#f5f5f5;
+padding:20px;
+}
+
+.box{
+max-width:700px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.1);
+}
+
+input,textarea{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:black;
+color:white;
+border:none;
+border-radius:8px;
+font-size:16px;
+}
+
+#result{
+margin-top:20px;
+background:#fafafa;
+padding:15px;
+border-radius:10px;
+white-space:pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>رزومه ساز حرفه‌ای</h1>
+
+<input id="name" placeholder="نام و نام خانوادگی">
+
+<input id="skills" placeholder="مهارت‌ها (با کاما جدا کن)">
+
+<input id="education" placeholder="تحصیلات">
+
+<textarea id="bio" rows="5" placeholder="درباره خودت"></textarea>
+
+<button onclick="buildResume()">
+ساخت رزومه
+</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function buildResume(){
+
+let name=document.getElementById("name").value;
+let skills=document.getElementById("skills").value;
+let education=document.getElementById("education").value;
+let bio=document.getElementById("bio").value;
+
+let text=
+`نام:
+${name}
+
+مهارت ها:
+${skills}
+
+تحصیلات:
+${education}
+
+درباره من:
+${bio}
+`;
+
+document.getElementById("result").innerText=text;
+
+}
+
+if ('serviceWorker' in navigator){
+navigator.serviceWorker.register('./service-worker.js');
+}
+
+</script>
+
+</body>
+</html>
