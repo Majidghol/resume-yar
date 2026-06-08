@@ -1,72 +1,110 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResumeYar Pro</title>
 
-    <title>ResumeYar</title>
+<link rel="manifest" href="manifest.json">
 
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
+<style>
+body{
+font-family:tahoma;
+background:#f5f5f5;
+padding:20px;
+}
 
-    <!-- Icon -->
-    <link rel="icon" href="assets/icon.png">
+.box{
+max-width:700px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.1);
+}
 
-    <!-- Theme -->
-    <meta name="theme-color" content="#000000">
+input,textarea{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:1px solid #ddd;
+border-radius:8px;
+}
 
-    <style>
-        body {
-            font-family: sans-serif;
-            background: #f4f4f4;
-            text-align: center;
-            padding: 40px;
-        }
+button{
+width:100%;
+padding:12px;
+background:black;
+color:white;
+border:none;
+border-radius:8px;
+font-size:16px;
+}
 
-        .box {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 500px;
-            margin: auto;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        button {
-            padding: 10px 20px;
-            border: none;
-            background: black;
-            color: white;
-            border-radius: 8px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-    </style>
+#result{
+margin-top:20px;
+background:#fafafa;
+padding:15px;
+border-radius:10px;
+white-space:pre-wrap;
+}
+</style>
 </head>
 
 <body>
 
-    <div class="box">
-        <h1>رزومه‌ساز حرفه‌ای</h1>
-        <p>ساخت و دانلود رزومه PDF</p>
+<div class="box">
 
-        <button onclick="alert('در حال توسعه 🚀')">
-            ساخت رزومه
-        </button>
-    </div>
+<h1>رزومه ساز حرفه‌ای</h1>
 
-    <!-- Service Worker -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./service-worker.js')
-            .then(reg => {
-                console.log("SW OK:", reg.scope);
-            })
-            .catch(err => {
-                console.log("SW ERROR:", err);
-            });
-        }
-    </script>
+<input id="name" placeholder="نام و نام خانوادگی">
+
+<input id="skills" placeholder="مهارت‌ها (با کاما جدا کن)">
+
+<input id="education" placeholder="تحصیلات">
+
+<textarea id="bio" rows="5" placeholder="درباره خودت"></textarea>
+
+<button onclick="buildResume()">
+ساخت رزومه
+</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function buildResume(){
+
+let name=document.getElementById("name").value;
+let skills=document.getElementById("skills").value;
+let education=document.getElementById("education").value;
+let bio=document.getElementById("bio").value;
+
+let text=
+`نام:
+${name}
+
+مهارت ها:
+${skills}
+
+تحصیلات:
+${education}
+
+درباره من:
+${bio}
+`;
+
+document.getElementById("result").innerText=text;
+
+}
+
+if ('serviceWorker' in navigator){
+navigator.serviceWorker.register('./service-worker.js');
+}
+
+</script>
 
 </body>
 </html>

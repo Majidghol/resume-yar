@@ -1,6 +1,6 @@
 const CACHE_NAME = "resumeyar-v1";
 
-const urlsToCache = [
+const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./manifest.json",
@@ -9,11 +9,9 @@ const urlsToCache = [
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(FILES_TO_CACHE))
   );
-  self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
@@ -22,8 +20,7 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request)
+      .then(response => response || fetch(event.request))
   );
 });
